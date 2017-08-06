@@ -15,6 +15,7 @@
 
 変数名|設定値
 :--|:--
+LOGGER_LEVEL|ログレベル ERRORにする
 BUCKET_NAME|Amazon Pollyが生成するMP3ファイルを格納するS3バケット名
 BUCKET_REGION|ap-northeast-1など S3バケットがあるリージョン名
 VOICE_ID|Amazon PollyのボイスID 日本語なので Mizukiを設定する

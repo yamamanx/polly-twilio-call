@@ -1,27 +1,30 @@
-# coding:utf-8
 
-import os
 import logging
-import sys
 import traceback
+import config
 from boto3 import Session
 from boto3 import resource
 from contextlib import closing
 
 logger = logging.getLogger()
 
+if config.logger_level == 'INFO':
+    logger.setLevel(logging.INFO)
+elif config.logger_level == 'ERROR':
+    logger.setLevel(logging.ERROR)
+elif config.logger_level == 'DEBUG':
+    logger.setLevel(logging.DEBUG)
 
-logger.setLevel(logging.INFO)
 
 class PollyMp3(object):
 
     def __init__(self):
-        self.polly_region = os.environ['POLLY_REGION']
-        self.bucket_name = os.environ['BUCKET_NAME']
-        self.bucket_region = os.environ['BUCKET_REGION']
-        self.voice_id = os.environ['VOICE_ID']
+        self.polly_region = config.polly_region
+        self.bucket_name = config.bucket_name
+        self.bucket_region = config.bucket_region
+        self.voice_id = config.voice_id
 
-    def set_twiml(self,file_name,twiml_str):
+    def set_twiml(self, file_name, twiml_str):
         try:
             s3 = resource('s3')
             bucket = s3.Bucket(self.bucket_name)
@@ -44,9 +47,9 @@ class PollyMp3(object):
             return entry_url
 
         except Exception as e:
-            logger.error(traceback.format_exc(sys.exc_info()[2]))
+            logger.error(traceback.format_exc())
 
-    def set_mp3(self,file_name,polly_text):
+    def set_mp3(self, file_name, polly_text):
         try:
             session = Session(region_name=self.polly_region)
             polly = session.client("polly")
@@ -77,4 +80,4 @@ class PollyMp3(object):
             return entry_url
 
         except Exception as e:
-            logger.error(traceback.format_exc(sys.exc_info()[2]))
+            logger.error(traceback.format_exc())
