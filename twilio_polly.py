@@ -40,7 +40,7 @@ class TwilioPolly(object):
             return call.sid
 
         except Exception as e:
-            logger.error(traceback.format_exc())
+            raise Exception(traceback.format_exc())
 
     def send_message(self, to_number):
         try:
@@ -51,7 +51,7 @@ class TwilioPolly(object):
                 body=config.message_body
             )
 
-            return message
+            return message.sid
 
         except Exception as e:
-            logger.error(traceback.format_exc())
+            raise Exception(traceback.format_exc())

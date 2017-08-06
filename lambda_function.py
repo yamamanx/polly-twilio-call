@@ -1,6 +1,5 @@
 
 import traceback
-import logging
 import logging.config
 import config
 import random
@@ -18,7 +17,7 @@ elif config.logger_level == 'DEBUG':
     logger.setLevel(logging.DEBUG)
 
 
-def main(event, context):
+def lambda_handler(event, context):
     try:
 
         polly = PollyMp3()
@@ -28,12 +27,15 @@ def main(event, context):
             tel_number = '+81' + tel_number[1:len(tel_number)]
 
         file_name = '{tel}{time}'.format(
-            tel=tel_number,
-            time=datetime.now.strftime('%Y%m%d%H%M%S')
+            tel=tel_number.replace('+',''),
+            time=datetime.now().strftime('%Y%m%d%H%M%S')
         )
         mp3_url = polly.set_mp3(
             file_name,
-            random.choice(config.response_message)
+            '{message_0} , {message_1}'.format(
+                message_0=config.message_prefix,
+                message_1=random.choice(config.messages)
+            )
         )
         logger.info(mp3_url)
 
@@ -46,20 +48,14 @@ def main(event, context):
         call_sid = twilio.make_call(tel_number, twiml_url)
         logger.info(call_sid)
 
+        message = twilio.send_message(tel_number)
+        logger.info(message)
+
+        return {
+            'call_sid': call_sid,
+            'message': message,
+            'tel_number': tel_number
+        }
+
     except Exception as e:
-        logger.error(traceback.format_exc())
-
-
-def lambda_handler(event, context):
-    logger.setLevel(logging.INFO)
-    main(event, context)
-    return {
-        'message': 'done'
-    }
-
-if __name__ == '__main__':
-    logging.config.fileConfig("logging.conf")
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
-    event = {}
-    main(event, None)
+        raise Exception(traceback.format_exc())

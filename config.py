@@ -12,13 +12,14 @@ voice_id = os.environ['VOICE_ID']
 polly_region = os.environ['POLLY_REGION']
 
 
-message_body = 'SIMの見直しでこんなにもお得\n' \
-               'mineo紹介キャンペーン\n' \
-               'Amazonギフト券2,000円をプレゼント\n' \
-               'https://www.yamamanx.com/iphone-se-sim-free-mineo/'
+message_body = u'SIMの見直しでこんなにもお得\n' \
+               u'mineo紹介キャンペーン\n' \
+               u'Amazonギフト券2,000円をプレゼント\n' \
+               u'https://www.yamamanx.com/iphone-se-sim-free-mineo/'
 
+message_prefix = u'サラリーマン川柳 スマートフォン編'
 
-response_message = [
+messages = [
     u'スマートフォン , 使う妻とは , 不話不音',
     u'妻のグチ , ツイッターなら , つぶやける',
     u'ツイッター , 私が言っても , ひとりごと',

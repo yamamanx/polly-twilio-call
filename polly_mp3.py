@@ -47,7 +47,7 @@ class PollyMp3(object):
             return entry_url
 
         except Exception as e:
-            logger.error(traceback.format_exc())
+            raise Exception(traceback.format_exc())
 
     def set_mp3(self, file_name, polly_text):
         try:
@@ -80,4 +80,4 @@ class PollyMp3(object):
             return entry_url
 
         except Exception as e:
-            logger.error(traceback.format_exc())
+            raise Exception(traceback.format_exc())
