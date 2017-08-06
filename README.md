@@ -1,31 +1,9 @@
 # 作成中
 
-# Google Calendar Twilio Reminder
+# Polly Twilio Call
 
-- Googleカレンダーの予定をX時間前にTwilioで電話します。
-- Googleアカウントと電話する連絡先はkintoneで管理します。
-- 設定など詳細はこちらの[ブログ](http://www.yamamanx.com/aws-polly-twilio-python-google-calendar-s3-kintone/)に書きます。
-- 以下、動かすための簡易説明です。
-
-
-## kintoneアプリの作成
-
-以下の項目を持つアプリを作成します。
-
-フィールド名|フィールドコード|タイプ|内容
-:--|:--|:--|:--
-メールアドレ|calendar＿id|文字列(1行)|Googleアカウントのメールアドレス
-電話番号|tel_number|文字列(1行)|Twilioからかかってくる先の電話番号
-無効|invalid|チェックボックス|選択項目は「無効」のみ
-
-※「無効」は設定を無効にするための項目です。レコード削除でも同じです。
-
-
-## Googleカレンダー
-
-- Google Developers ConsoleでCalendar V3 APIを発行してサービスアカウントを作ります。
-- 認証キーはjson形式にしてソースコードと同じフォルダに配置します。
-- 対象のカレンダーに作ったサービスアカウントに閲覧権限を設定します。
+* リクエストされた電話番号にリストからランダムで生成したスマートフォン川柳をPollyで音声に変換して電話をかけます。
+* SMSへ広告のメッセージを送信します。
 
 
 ## AWS Lambda
@@ -37,20 +15,10 @@
 
 変数名|設定値
 :--|:--
-TIME_LAG|予定を何時間前に通知するかを設定します
-TIME_ZONE|Asia/Tokyoなど
 BUCKET_NAME|Amazon Pollyが生成するMP3ファイルを格納するS3バケット名
 BUCKET_REGION|ap-northeast-1など S3バケットがあるリージョン名
-VOICE_ID|Amazon PollyのボイスID 日本語なので Mizuki
+VOICE_ID|Amazon PollyのボイスID 日本語なので Mizukiを設定する
 POLLY_REGION|Amazon Pollyのリージョン名
-KINTONE_DOMAIN|kintoneのドメイン xxx.cybozu.com
-KINTONE_APP|kintoneのアプリの数字
-KINTONE_HEADERS_KEY|X-Cybozu-API-Token
-KINTONE_API_KEY|kintoneのAPIキー
-KINTONE_BASIC_HEADERS_KEY|Authorization
-KINTONE_BASIC_HEADERS_VALUE|kintoneベーシック認証のキー(Basic)で始まる
-DOMAIN|Googleのドメイン GSuiteは独自ドメイン、フリーアカウントはgmail.com
-GOOGLE_SERVICE_ACCOUNT_ID|GoogleのサービスアカウントID
 TWILIO_ACCOUNT_SID|TwilioのアカウントSID
 TWILIO_AUTH_TOKEN|Twilioのトークン
 TWILIO_FROM_NUMBER|Twilioの発信元電話番号
