@@ -27,3 +27,13 @@ TWILIO_FROM_NUMBER|Twilioの発信元電話番号
 ## Twilioの電話番号
 
 * SMSを送るのでUSの電話番号が必要です
+
+## リクエスト
+
+tel_numberは実際の電話番号です
+
+```
+{
+    "tel": "tel_number"
+}
+```
