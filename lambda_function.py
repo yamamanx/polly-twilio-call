@@ -22,7 +22,7 @@ def lambda_handler(event, context):
 
         polly = PollyMp3()
         twilio = TwilioPolly()
-        tel_number = event['tel']
+        tel_number = event['tel'].replace('-','')
         if tel_number[0:1] == '0':
             tel_number = '+81' + tel_number[1:len(tel_number)]
 
